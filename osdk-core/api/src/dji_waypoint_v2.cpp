@@ -33,6 +33,7 @@
 #include "memory.h"
 #include "dji_internal_command.hpp"
 #include <math.h>
+#include <iostream>
 using namespace DJI;
 using namespace DJI::OSDK;
 
@@ -96,6 +97,8 @@ bool missionEncode(const std::vector<WaypointV2Internal> &mission, uint8_t *push
 
   elementEncode<uint16_t>(endIndex, tempTotalLen, tempPtr);
   uint16_t i = 0;
+  std::cout << "start index:" << startIndex << std::endl;
+  std::cout << "end   index:" << endIndex   << std::endl;
   for (i = startIndex; (tempTotalLen < 200) && i < mission.size(); ++i) {
     WaypointV2Internal wp = mission[i];
     elementEncode<float32_t>(wp.positionX, tempTotalLen, tempPtr);
@@ -592,7 +595,7 @@ ErrorCode::ErrorCodeType WaypointV2MissionOperator::uploadMission(
     }
     if (ackInfo.dataLen >= sizeof(RetCodeType)) {
       auto *ackCode = (UploadMissionRawAck *)ackData;
-      // DSTATUS("mis_upload_result:%d,mis_ack_start_index:%d, mis_ack_end_index:%d",ackCode->result,ackCode->startIndex,ackCode->endIndex);
+      DSTATUS("mis_upload_result:%d,mis_ack_start_index:%d, mis_ack_end_index:%d",ackCode->result,ackCode->startIndex,ackCode->endIndex);
       if (ackCode->result != 0)
         return ErrorCode::getErrorCode(ErrorCode::MissionV2Module,
                                        ErrorCode::MissionV2Common,

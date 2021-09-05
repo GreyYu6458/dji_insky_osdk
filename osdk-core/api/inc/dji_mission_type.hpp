@@ -832,7 +832,7 @@ typedef union Eventdata
   }MissionExecEvent;
 
   // /*ID:0x12*/
-  // uint8_t avoidState;
+  uint8_t avoidState;
 
   /*ID:0x20*/
   // struct MissionValidityEvent {
@@ -841,12 +841,12 @@ typedef union Eventdata
   // }MissionValidityEvent;
 
   /*ID:0x30*/
-  // struct ActionExecEvent{
-  //   uint16_t actionId;
-  //   uint8_t preActuatorState;
-  //   uint8_t curActuatorState;
-  //   uint32_t result;
-  // }ActionExecEvent;
+  struct ActionExecEvent{
+    uint16_t actionId;
+    uint8_t preActuatorState;
+    uint8_t curActuatorState;
+    uint32_t result;
+  }ActionExecEvent;
 }Eventdata;
 
 /*! Mission's event push ack data
