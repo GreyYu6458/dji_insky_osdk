@@ -170,6 +170,7 @@ private:
   Mutex* mutex;
   bool   vaild;
   bool   initFlag;
+  char   buff[512];
 
   // @todo implement
   typedef enum NUMBER_STYLE {

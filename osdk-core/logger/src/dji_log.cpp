@@ -68,7 +68,8 @@ Log::title(int level, const char* prefix, const char* func, int line)
     mutex->lock();
     uint32_t timeMs = 0;
     OsdkOsal_GetTimeMs(&timeMs);
-    printf("[%d.%03d]%s/%d @ %s, L%d: ", timeMs / 1000, timeMs % 1000, prefix, level, func, line);
+    sprintf(buff, "[%d.%03d]%s/%d @ %s, L%d: ", timeMs / 1000, timeMs % 1000, prefix, level, func, line);
+    _func(buff);
     mutex->unlock();
   }
   else
@@ -92,7 +93,8 @@ Log::title(int level, const char* prefix)
   {
     vaild = true;
     mutex->lock();
-    printf("%s/%d" , prefix, level);
+    sprintf(buff, "%s/%d" , prefix, level);
+    _func(buff);
     mutex->unlock();
   }
   else
@@ -116,8 +118,6 @@ void Log::onMessage(const std::function<void (char*)>& func)
 Log&
 Log::print(const char* fmt, ...)
 {
-  char log[300] = {0};
-
   if(!initFlag)
   {
     mutex = new Mutex();
@@ -128,18 +128,18 @@ Log::print(const char* fmt, ...)
     va_list args;
     va_start(args, fmt);
     mutex->lock();
-    vsnprintf(log, sizeof(log) - 1, fmt, args);
+    vsnprintf(buff, sizeof(buff) - 1, fmt, args);
     va_end(args);
-    if(log[strlen(log)] != '\n' && _func) {
-      _func(log);
+    if(buff[strlen(buff)] != '\n' && _func) {
+      _func(buff);
       // printf("%s\n", log);
     } else if(_func) {
-      _func(log);
+      _func(buff);
       // printf("%s", log);
     };
     mutex->unlock();
 #if defined(__linux__)
-    fflush(stdout);
+      // fflush(stdout);
 #endif
   }
   return *this;
