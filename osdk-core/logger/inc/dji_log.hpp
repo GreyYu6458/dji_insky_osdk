@@ -33,6 +33,8 @@
 #include "dji_singleton.hpp"
 #include "dji_platform.hpp"
 
+#include <functional>
+
 
 #ifdef WIN32
 #define __func__ __FUNCTION__
@@ -143,6 +145,7 @@ public:
   bool getDebugLogState();
   bool getErrorLogState();
 
+  void onMessage(const std::function<void (char*)>&);
   virtual Log& print(const char* fmt, ...);
 
   Log& operator<<(bool val);
@@ -180,7 +183,7 @@ private:
   bool enable_status;
   bool enable_debug;
   bool enable_error;
-
+  std::function<void (char*)> _func;
   static const bool release = false;
 };
 

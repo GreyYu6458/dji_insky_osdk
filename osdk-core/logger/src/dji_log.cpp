@@ -108,6 +108,11 @@ Log::print()
   return *this;
 }
 
+void Log::onMessage(const std::function<void (char*)>& func)
+{
+  _func = func;
+}
+
 Log&
 Log::print(const char* fmt, ...)
 {
@@ -125,10 +130,12 @@ Log::print(const char* fmt, ...)
     mutex->lock();
     vsnprintf(log, sizeof(log) - 1, fmt, args);
     va_end(args);
-    if(log[strlen(log)] != '\n') {
-      printf("%s\n", log);
-    } else {
-      printf("%s", log);
+    if(log[strlen(log)] != '\n' && _func) {
+      _func(log);
+      // printf("%s\n", log);
+    } else if(_func) {
+      _func(log);
+      // printf("%s", log);
     };
     mutex->unlock();
 #if defined(__linux__)
