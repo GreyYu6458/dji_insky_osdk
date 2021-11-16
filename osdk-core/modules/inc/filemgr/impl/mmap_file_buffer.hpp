@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <memory>
 #include <atomic>
+#include <cstdio>
+#include <string>
 
 namespace DJI {
 namespace OSDK {
