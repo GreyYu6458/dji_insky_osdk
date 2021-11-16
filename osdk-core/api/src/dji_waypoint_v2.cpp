@@ -97,8 +97,8 @@ bool missionEncode(const std::vector<WaypointV2Internal> &mission, uint8_t *push
 
   elementEncode<uint16_t>(endIndex, tempTotalLen, tempPtr);
   uint16_t i = 0;
-  std::cout << "start index:" << startIndex << std::endl;
-  std::cout << "end   index:" << endIndex   << std::endl;
+  // std::cout << "start index:" << startIndex << std::endl;
+  // std::cout << "end   index:" << endIndex   << std::endl;
   for (i = startIndex; (tempTotalLen < 200) && i < mission.size(); ++i) {
     WaypointV2Internal wp = mission[i];
     elementEncode<float32_t>(wp.positionX, tempTotalLen, tempPtr);
