@@ -30,6 +30,7 @@
 
 #include <dji_vehicle.hpp>
 #include <dji_linux_helpers.hpp>
+#include <string>
 
 using namespace DJI;
 using namespace DJI::OSDK;
@@ -43,6 +44,9 @@ int writeStreamData(const char *fileName, const uint8_t *data, uint32_t len) {
     printf("fopen failed!\n");
     return -1;
   }
+  size = fwrite("\ndata len:", 1, 10, fp);
+  std::string _len = std::to_string(len) + "\n";
+  size = fwrite( _len.c_str() , 1, _len.size() + 1, fp);
   size = fwrite(data, 1, len, fp);
   if(size != len) {
     fclose(fp);

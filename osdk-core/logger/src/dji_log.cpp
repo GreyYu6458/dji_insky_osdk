@@ -46,6 +46,9 @@ Log::Log(Mutex* m)
   this->enable_status = true;
   this->enable_debug  = false;
   this->enable_error = true;
+  _func = [](char* ch){
+    printf("%s\n", ch);
+  };
 }
 
 Log::~Log()
@@ -69,7 +72,8 @@ Log::title(int level, const char* prefix, const char* func, int line)
     uint32_t timeMs = 0;
     OsdkOsal_GetTimeMs(&timeMs);
     sprintf(buff, "[%d.%03d]%s/%d @ %s, L%d: ", timeMs / 1000, timeMs % 1000, prefix, level, func, line);
-    _func(buff);
+    if(_func)
+      _func(buff);
     mutex->unlock();
   }
   else
