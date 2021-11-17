@@ -139,7 +139,7 @@ void FileMgrImpl::fileListMonitorTask(void *arg) {
     uint32_t curTimeMs = 0;
     uint32_t preTimeMs = 0;
     uint32_t pollTimeMsInterval = 500;
-    uint32_t taskTimeOutMs = 6000;
+    uint32_t taskTimeOutMs = 15000;
     FileMgrImpl *impl = (FileMgrImpl *)arg;
     OsdkOsal_GetTimeMs(&curTimeMs);
     impl->fileListHandler->updateTimeMs = curTimeMs;
