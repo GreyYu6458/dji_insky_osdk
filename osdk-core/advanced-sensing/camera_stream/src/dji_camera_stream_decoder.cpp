@@ -251,7 +251,7 @@ void DJICameraStreamDecoder::decodeBuffer(uint8_t* buf, int bufLen)
           sws_scale(pSwsCtx,
                     (uint8_t const *const *) pFrameYUV->data, pFrameYUV->linesize, 0, pFrameYUV->height,
                              pFrameRGB->data, pFrameRGB->linesize);
-
+          
           pFrameRGB->height = h;
           pFrameRGB->width = w;
 
